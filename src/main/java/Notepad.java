@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Notepad {
     public Notepad() {
@@ -28,6 +30,14 @@ public class Notepad {
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
         frame.setJMenuBar(menuBar);
+
+        aboutMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "This program was made by Adam Pejcic", "About",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 
         frame.setVisible(true);
     }
