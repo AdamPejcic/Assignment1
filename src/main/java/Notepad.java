@@ -39,6 +39,13 @@ public class Notepad {
             }
         });
 
+        exitMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
         frame.setVisible(true);
     }
 
