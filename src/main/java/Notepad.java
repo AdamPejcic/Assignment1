@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 public class Notepad {
     public Notepad() {
@@ -10,12 +11,12 @@ public class Notepad {
         frame.setSize(500, 500);
 
         JTextArea textArea = new JTextArea();
-        frame.add(textArea, BorderLayout.CENTER); // Add the text area to the center of the frame
+        frame.add(textArea, BorderLayout.CENTER);
 
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenu editMenu = new JMenu("Edit");
-        JMenuItem timeAndDateMenuItem = new JMenu("Time and Date");
+        JMenuItem timeAndDateMenuItem = new JMenuItem("Time and Date");
         JMenuItem aboutMenuItem = new JMenuItem("About");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         JMenuItem selectAllMenuItem = new JMenuItem("Select All");
@@ -32,6 +33,14 @@ public class Notepad {
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
         frame.setJMenuBar(menuBar);
+
+        timeAndDateMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String date = new Date().toString();
+                textArea.insert(date + "\n", 0);
+            }
+        });
 
         aboutMenuItem.addActionListener(new ActionListener() {
             @Override
