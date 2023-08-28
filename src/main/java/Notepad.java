@@ -1,16 +1,33 @@
+import org.yaml.snakeyaml.Yaml;
 import javax.swing.*;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.Map;
 
 public class Notepad {
-    public Notepad() {
+    public Notepad() throws FileNotFoundException {
         JFrame frame = new JFrame("Notepad");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
 
+        Yaml buildFile = new Yaml();
+        InputStream inputStream = new FileInputStream(new File("build.yml"));
+        Map<String, Object> obj = buildFile.load(inputStream);
+        String font = (String) obj.get("font");
+        int size = (int) obj.get("size");
+        int red = (int) obj.get("red");
+        int green = (int) obj.get("green");
+        int blue = (int) obj.get("blue");
+        Color textColor = new Color(red, green, blue);
         JTextArea textArea = new JTextArea();
+        textArea.setFont(new Font(font, Font.PLAIN, size));
+        textArea.setForeground(textColor);
         frame.add(textArea, BorderLayout.CENTER);
 
         JMenuBar menuBar = new JMenuBar();
@@ -60,7 +77,7 @@ public class Notepad {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
        new Notepad();
     }
 }
