@@ -15,12 +15,14 @@ public class Notepad {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenu editMenu = new JMenu("Edit");
+        JMenuItem timeAndDateMenuItem = new JMenu("Time and Date");
         JMenuItem aboutMenuItem = new JMenuItem("About");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         JMenuItem selectAllMenuItem = new JMenuItem("Select All");
         JMenuItem copyMenuItem = new JMenuItem("Copy");
         JMenuItem pasteMenuItem = new JMenuItem("Paste");
         JMenuItem cutMenuItem = new JMenuItem("Cut");
+        fileMenu.add(timeAndDateMenuItem);
         fileMenu.add(aboutMenuItem);
         fileMenu.add(exitMenuItem);
         editMenu.add(selectAllMenuItem);
