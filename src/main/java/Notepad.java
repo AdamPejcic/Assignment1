@@ -62,7 +62,7 @@ public class Notepad {
         aboutMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "This program was made by Adam Pejcic", "About",
+                JOptionPane.showMessageDialog(frame, "This program was made by Adam Pejcic.", "About",
                         JOptionPane.INFORMATION_MESSAGE);
             }
         });
@@ -71,6 +71,13 @@ public class Notepad {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
+            }
+        });
+
+        selectAllMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.selectAll();
             }
         });
 
