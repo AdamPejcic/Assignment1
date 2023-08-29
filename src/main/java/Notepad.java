@@ -40,6 +40,7 @@ public class Notepad {
         JMenuItem copyMenuItem = new JMenuItem("Copy");
         JMenuItem pasteMenuItem = new JMenuItem("Paste");
         JMenuItem cutMenuItem = new JMenuItem("Cut");
+        JMenuItem deleteMenuItem = new JMenuItem("Delete");
         fileMenu.add(timeAndDateMenuItem);
         fileMenu.add(aboutMenuItem);
         fileMenu.add(exitMenuItem);
@@ -47,6 +48,7 @@ public class Notepad {
         editMenu.add(copyMenuItem);
         editMenu.add(pasteMenuItem);
         editMenu.add(cutMenuItem);
+        editMenu.add(deleteMenuItem);
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
         frame.setJMenuBar(menuBar);
@@ -78,6 +80,15 @@ public class Notepad {
             @Override
             public void actionPerformed(ActionEvent e) {
                 textArea.selectAll();
+            }
+        });
+
+        deleteMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int start = textArea.getSelectionStart();
+                int end = textArea.getSelectionEnd();
+                textArea.replaceRange("", start, end);
             }
         });
 
