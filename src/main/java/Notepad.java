@@ -108,6 +108,21 @@ public class Notepad {
             }
         });
 
+        cutMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedText = textArea.getSelectedText();
+                if (selectedText != null) {
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    StringSelection copySelection = new StringSelection(selectedText);
+                    clipboard.setContents(copySelection, null);
+                    int start = textArea.getSelectionStart();
+                    int end = textArea.getSelectionEnd();
+                    textArea.replaceRange("", start, end);
+                }
+            }
+        });
+
         frame.setVisible(true);
     }
 
