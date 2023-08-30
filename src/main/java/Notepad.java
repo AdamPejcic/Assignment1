@@ -1,6 +1,8 @@
 import org.yaml.snakeyaml.Yaml;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -33,6 +35,7 @@ public class Notepad {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenu editMenu = new JMenu("Edit");
+        JMenuItem searchMenuItem = new JMenuItem("Search");
         JMenuItem timeAndDateMenuItem = new JMenuItem("Time and Date");
         JMenuItem aboutMenuItem = new JMenuItem("About");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
@@ -41,6 +44,7 @@ public class Notepad {
         JMenuItem pasteMenuItem = new JMenuItem("Paste");
         JMenuItem cutMenuItem = new JMenuItem("Cut");
         JMenuItem deleteMenuItem = new JMenuItem("Delete");
+        fileMenu.add(searchMenuItem);
         fileMenu.add(timeAndDateMenuItem);
         fileMenu.add(aboutMenuItem);
         fileMenu.add(exitMenuItem);
@@ -89,6 +93,18 @@ public class Notepad {
                 int start = textArea.getSelectionStart();
                 int end = textArea.getSelectionEnd();
                 textArea.replaceRange("", start, end);
+            }
+        });
+
+        copyMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedText = textArea.getSelectedText();
+                if (selectedText != null) {
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    StringSelection copySelection = new StringSelection(selectedText);
+                    clipboard.setContents(copySelection, null);
+                }
             }
         });
 
