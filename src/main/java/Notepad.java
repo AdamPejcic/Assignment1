@@ -122,6 +122,13 @@ public class Notepad {
                 }
             }
         });
+        
+        pasteMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.paste();
+            }
+        });
 
         frame.setVisible(true);
     }
