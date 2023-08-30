@@ -130,6 +130,27 @@ public class Notepad {
             }
         });
 
+        searchMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchText = JOptionPane.showInputDialog(frame, "Enter a word to search:");
+                String[] searchWords = searchText.split(" ");
+                if (searchWords[0] != null) {
+                    String text = textArea.getText();
+                    int startIndex = text.indexOf(searchWords[0]);
+                    if (startIndex != -1) {
+                        textArea.setSelectionStart(startIndex);
+                        textArea.setSelectionEnd(startIndex + searchWords[0].length());
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(frame, "The word being searched for could not be found.",
+                                "Search Result",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        });
+
         frame.setVisible(true);
     }
 
