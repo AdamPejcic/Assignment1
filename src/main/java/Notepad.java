@@ -15,18 +15,23 @@ import java.util.Map;
 public class Notepad {
 
     private JTextArea textArea;
+    private JComboBox<String> fontComboBox;
+    private JComboBox<String> styleComboBox;
+    private JComboBox<Integer> sizeComboBox;
+    private JComboBox<String> colourComboBox;
+    private int style;
+    private Color newColour;
+
 
     public Notepad() throws FileNotFoundException {
         JFrame frame = new JFrame("Notepad");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
 
-        JComboBox<String> fontComboBox =
-                new JComboBox<>(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
-        JComboBox<String> styleComboBox = new JComboBox<>(new String[] {"Plain", "Bold", "Italic"});
-        JComboBox<Integer> sizeComboBox = new JComboBox<>(new Integer[] {10, 14, 18, 24});
-        String[] colourOptions = {"Black", "Red", "Green", "Blue"};
-        JComboBox<String> colourComboBox = new JComboBox<>(colourOptions);
+        fontComboBox = new JComboBox<>(new String[] {"Arial", "Calibri", "Verdana"});
+        styleComboBox = new JComboBox<>(new String[] {"Regular", "Bold", "Italic"});
+        sizeComboBox = new JComboBox<>(new Integer[] {10, 14, 18, 24});
+        colourComboBox = new JComboBox<>(new String[] {"Black", "Red", "Green", "Blue"});
 
         GridLayout comboBoxLayout = new GridLayout(2, 2);
         JPanel comboBoxPanel = new JPanel(comboBoxLayout);
@@ -159,6 +164,34 @@ public class Notepad {
             }
         });
 
+        fontComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTextProperties();
+            }
+        });
+
+        styleComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTextProperties();
+            }
+        });
+
+        sizeComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTextProperties();
+            }
+        });
+
+        colourComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changeTextProperties();
+            }
+        });
+
         frame.setVisible(true);
     }
 
@@ -175,6 +208,39 @@ public class Notepad {
         int start = textArea.getSelectionStart();
         int end = textArea.getSelectionEnd();
         textArea.replaceRange("", start, end);
+    }
+
+    public void changeTextProperties() {
+        String selectedFont = fontComboBox.getSelectedItem().toString();
+
+        if (styleComboBox.getSelectedIndex() == 0) {
+            style = Font.PLAIN;
+        }
+        else if (styleComboBox.getSelectedIndex() == 1) {
+            style = Font.BOLD;
+        }
+        else if (styleComboBox.getSelectedIndex() == 2) {
+            style = Font.ITALIC;
+        }
+
+        int fontSize = (Integer) sizeComboBox.getSelectedItem();
+
+        String selectedColour = colourComboBox.getSelectedItem().toString();
+        if (selectedColour.equals("Black")) {
+            newColour = Color.BLACK;
+        }
+        else if (selectedColour.equals("Red")) {
+            newColour = Color.RED;
+        }
+        else if (selectedColour.equals("Green")) {
+            newColour = Color.GREEN;
+        }
+        else if (selectedColour.equals("Blue")) {
+            newColour = Color.BLUE;
+        }
+
+        textArea.setFont(new Font(selectedFont, style, fontSize));
+        textArea.setForeground(newColour);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
