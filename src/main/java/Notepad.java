@@ -29,7 +29,7 @@ public class Notepad {
         frame.setSize(500, 500);
 
         fontComboBox = new JComboBox<>(new String[] {"Arial", "Calibri", "Verdana"});
-        styleComboBox = new JComboBox<>(new String[] {"Regular", "Bold", "Italic"});
+        styleComboBox = new JComboBox<>(new String[] {"Plain", "Bold", "Italic"});
         sizeComboBox = new JComboBox<>(new Integer[] {10, 14, 18, 24});
         colourComboBox = new JComboBox<>(new String[] {"Black", "Red", "Green", "Blue"});
 
@@ -48,15 +48,18 @@ public class Notepad {
         Yaml buildFile = new Yaml();
         InputStream inputStream = new FileInputStream(new File("build.yml"));
         Map<String, Object> obj = buildFile.load(inputStream);
-        String font = (String) obj.get("font");
+
+        int font = (int) obj.get("font");
+        fontComboBox.setSelectedIndex(font);
+        int style = (int) obj.get("style");
+        styleComboBox.setSelectedIndex(style);
         int size = (int) obj.get("size");
-        int red = (int) obj.get("red");
-        int green = (int) obj.get("green");
-        int blue = (int) obj.get("blue");
-        Color textColour = new Color(red, green, blue);
+        sizeComboBox.setSelectedIndex(size);
+        int colour = (int) obj.get("colour");
+        colourComboBox.setSelectedIndex(colour);
+
         textArea = new JTextArea();
-        textArea.setFont(new Font(font, Font.PLAIN, size));
-        textArea.setForeground(textColour);
+        changeTextProperties();
         frame.add(textArea, BorderLayout.CENTER);
 
         JMenuBar menuBar = new JMenuBar();
