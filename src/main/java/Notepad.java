@@ -21,6 +21,25 @@ public class Notepad {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
 
+        JComboBox<String> fontComboBox =
+                new JComboBox<>(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
+        JComboBox<String> styleComboBox = new JComboBox<>(new String[] {"Plain", "Bold", "Italic"});
+        JComboBox<Integer> sizeComboBox = new JComboBox<>(new Integer[] {10, 14, 18, 24});
+        String[] colourOptions = {"Black", "Red", "Green", "Blue"};
+        JComboBox<String> colourComboBox = new JComboBox<>(colourOptions);
+
+        GridLayout comboBoxLayout = new GridLayout(2, 2);
+        JPanel comboBoxPanel = new JPanel(comboBoxLayout);
+        comboBoxPanel.add(new JLabel("Font:"));
+        comboBoxPanel.add(fontComboBox);
+        comboBoxPanel.add(new JLabel("Style:"));
+        comboBoxPanel.add(styleComboBox);
+        comboBoxPanel.add(new JLabel("Size:"));
+        comboBoxPanel.add(sizeComboBox);
+        comboBoxPanel.add(new JLabel("Colour:"));
+        comboBoxPanel.add(colourComboBox);
+        frame.add(comboBoxPanel, BorderLayout.NORTH);
+
         Yaml buildFile = new Yaml();
         InputStream inputStream = new FileInputStream(new File("build.yml"));
         Map<String, Object> obj = buildFile.load(inputStream);
@@ -29,10 +48,10 @@ public class Notepad {
         int red = (int) obj.get("red");
         int green = (int) obj.get("green");
         int blue = (int) obj.get("blue");
-        Color textColor = new Color(red, green, blue);
+        Color textColour = new Color(red, green, blue);
         textArea = new JTextArea();
         textArea.setFont(new Font(font, Font.PLAIN, size));
-        textArea.setForeground(textColor);
+        textArea.setForeground(textColour);
         frame.add(textArea, BorderLayout.CENTER);
 
         JMenuBar menuBar = new JMenuBar();
