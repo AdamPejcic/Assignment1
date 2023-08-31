@@ -13,6 +13,9 @@ import java.util.Date;
 import java.util.Map;
 
 public class Notepad {
+
+    private JTextArea textArea;
+
     public Notepad() throws FileNotFoundException {
         JFrame frame = new JFrame("Notepad");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,7 +30,7 @@ public class Notepad {
         int green = (int) obj.get("green");
         int blue = (int) obj.get("blue");
         Color textColor = new Color(red, green, blue);
-        JTextArea textArea = new JTextArea();
+        textArea = new JTextArea();
         textArea.setFont(new Font(font, Font.PLAIN, size));
         textArea.setForeground(textColor);
         frame.add(textArea, BorderLayout.CENTER);
@@ -90,36 +93,22 @@ public class Notepad {
         deleteMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int start = textArea.getSelectionStart();
-                int end = textArea.getSelectionEnd();
-                textArea.replaceRange("", start, end);
+                deleteSelectedText();
             }
         });
 
         copyMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedText = textArea.getSelectedText();
-                if (selectedText != null) {
-                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    StringSelection copySelection = new StringSelection(selectedText);
-                    clipboard.setContents(copySelection, null);
-                }
+                copySelectedText();
             }
         });
 
         cutMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedText = textArea.getSelectedText();
-                if (selectedText != null) {
-                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    StringSelection copySelection = new StringSelection(selectedText);
-                    clipboard.setContents(copySelection, null);
-                    int start = textArea.getSelectionStart();
-                    int end = textArea.getSelectionEnd();
-                    textArea.replaceRange("", start, end);
-                }
+                copySelectedText();
+                deleteSelectedText();
             }
         });
         
@@ -152,6 +141,21 @@ public class Notepad {
         });
 
         frame.setVisible(true);
+    }
+
+    public void copySelectedText() {
+        String selectedText = textArea.getSelectedText();
+        if (selectedText != null) {
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            StringSelection copySelection = new StringSelection(selectedText);
+            clipboard.setContents(copySelection, null);
+        }
+    }
+
+    public void deleteSelectedText() {
+        int start = textArea.getSelectionStart();
+        int end = textArea.getSelectionEnd();
+        textArea.replaceRange("", start, end);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
